@@ -7,11 +7,13 @@ Plan and execute collision free motion for a robot from point A → B in a 2D wo
 
 Setup and Foundation
   - Define start and end goals (in task/joint space)
-  - Decide planning method (task space vs config space)
+  - Decide planning method (task space vs config space)\
+
 Model
   - Define model (joint vars, workspace, links)
   - Develop equations for and implement FK/IK for 3R
   - Simulate
+
 Environment
   - Choose obstacle generation method
     - Dynamic obstacle detection (vision/camera)
@@ -19,15 +21,19 @@ Environment
     - Randomly generated geometries
   - Choose motion planning method (RRT or similar)
   - Create test environment with obstacles
+
 Motion Planning
  - Implement chosen method
  - Visualize (simulate with obstacles+final path)
+
 PD Control
  - Use IK to get joint space trajectory and implement PD controller
  - Simulate robot following trajectory and track error
-Visualization *Final Deliverable
+
+Visualization *Final Deliverable*
  - Robot animation
  - Show obstacles, path, robot pose
+
 Extensions
   - Optimize spline params to reduce peak acceleration and jerk (hardware preservation)
   - Dynamic obstacles with known (or unknown) motion
