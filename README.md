@@ -1,7 +1,7 @@
 # Obstacle Aware Motion Planning ECE 5463 Final Project
 
 **Project Goal**
-Plan and execute collision free motion for a robot from point A → B in a 2D workspace with circular and rectangular obstacles, using sampling-based motion planning, spline trajectories, and PD control.
+Plan and execute collision free motion for a robot from point A to B in a 2D workspace with circular and rectangular obstacles, using sampling based motion planning (RRT), spline trajectories, and PD control.
 
 **TODO:**
 
