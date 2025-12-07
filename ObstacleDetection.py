@@ -1,18 +1,37 @@
 import cv2
 import numpy as np
+from RRT import rrt
 
+goal = None
+path = None
+#global vars needed for scope
+
+def mouse_callback(event, x, y, flags, param): 
+    global goal
+    if event == cv2.EVENT_LBUTTONDOWN:
+        goal = (x, y)
+#function and RRT courtesy of https://github.com/nimRobotics/RRT/blob/master/rrt.py
+cv2.namedWindow("Overlay")
+cv2.setMouseCallback("Overlay", mouse_callback)
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,  720)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1280)
+#Locks resolution at 720p (from logi c270 - stays same for all cameras)
 ret,background = cap.read()
 #grabs first frame and initilizes the background
 background = cv2.cvtColor(background,cv2.COLOR_BGR2GRAY)
 background = cv2.GaussianBlur(background,(5,5),0)
 #will be used to filter background
+h,w = background.shape[:2]
+start = (50,50)
+#define home position (can be in terms of h,w for ratios)
 
-Threshold = 25  #Threshold identifies what is an object and what is not, 20-30 suggested range but will be testable
+Threshold = 30  #Threshold identifies what is an object and what is not, 20-30 suggested range but will be testable
 overlayStrength = 0.3 #Strength of overlay color on detected obstacles, 0-1 range
 
 while True:
     ret, frame = cap.read()
+    
     #Reads next frames continously
     if not ret:
         break
@@ -32,11 +51,17 @@ while True:
     overlay = frame.copy()
     overlay[obstacle_mask == 255] = (255, 255, 255)  # Highlight obstacles in red (can change color)
     vis = cv2.addWeighted(frame, overlayStrength, overlay, 1 - overlayStrength, 0)
-
-    cv2.imshow("Raw", frame)
-    cv2.imshow("Overlay", vis)
+    cv2.circle(vis, start, 3, (0,0,255), -1) #params as defined in circle function
+    if goal != None:
+        cv2.circle(vis, goal, 3, (40,0,255), -1)
+    #drawing start point and goal point
     #Overlay outputs the detected obstacles on the original input frame
-
+        path = rrt(obstacle_mask, start, goal, 100)
+    
+    cv2.imshow("Overlay", vis)
+    #print(path) #debug
+    cv2.imshow("Obstacle Mask", obstacle_mask)
+    
     if cv2.waitKey(1) & 0xFF == 27: #Press ESC to quit
         break
 
