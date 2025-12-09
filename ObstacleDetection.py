@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from RRT import rrt
+from robot_kinematics import improve_obstacle_mask
 
 goal = None
 path = None
@@ -14,8 +15,8 @@ def mouse_callback(event, x, y, flags, param):
 cv2.namedWindow("Overlay")
 cv2.setMouseCallback("Overlay", mouse_callback)
 cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH,  720)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1280)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,  1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 #Locks resolution at 720p (from logi c270 - stays same for all cameras)
 ret,background = cap.read()
 #grabs first frame and initilizes the background
@@ -26,7 +27,7 @@ h,w = background.shape[:2]
 start = (50,50)
 #define home position (can be in terms of h,w for ratios)
 
-Threshold = 30  #Threshold identifies what is an object and what is not, 20-30 suggested range but will be testable
+Threshold = 30  #Threshold identifies what is an object and what is not, 20-30 suggested range from doc but will be testable
 overlayStrength = 0.3 #Strength of overlay color on detected obstacles, 0-1 range
 
 while True:
@@ -44,7 +45,8 @@ while True:
     _, fg_mask = cv2.threshold(diff,Threshold,255,cv2.THRESH_BINARY)
 
     contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
+    fg_mask = improve_obstacle_mask(fg_mask, 100)
+    #implementing improve obstacle mask function to clean up mask using morphology
     obstacle_mask = np.zeros_like(fg_mask)
     for valid_contours in contours:
         cv2.drawContours(obstacle_mask, [valid_contours], -1, (255), thickness=-1)
@@ -57,12 +59,13 @@ while True:
     #drawing start point and goal point
     #Overlay outputs the detected obstacles on the original input frame
         path = rrt(obstacle_mask, start, goal, 100)
-    
+        print(path)
     cv2.imshow("Overlay", vis)
     #print(path) #debug
-    cv2.imshow("Obstacle Mask", obstacle_mask)
+    #cv2.imshow("Obstacle Mask", obstacle_mask) #improved qual
+
     
-    if cv2.waitKey(1) & 0xFF == 27: #Press ESC to quit
+    if cv2.waitKey(1) & 0xFF == 27: #ESC to end program
         break
 
 cap.release()
