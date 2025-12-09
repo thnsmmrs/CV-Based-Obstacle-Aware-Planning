@@ -38,6 +38,9 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 *12/8* (30 mins)
 - Ethan modeled and printed camera mounting assembly for optimal planar object detection
 
+*12/8* (30 minutes)
+- Ayush researched possible implementations of RRT* path planning instead of RRT for smoother object avoidance
+
 *12/9* (1 hour 30 mins)
 - Krish worked on the robot_kinematics.py file, implementing FK and IK equations and working on the .pdf file with all of the equations and overall solving process
 
