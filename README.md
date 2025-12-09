@@ -43,6 +43,7 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 
 Left todo:
 - Morphology on obstacle mask
+- Contour shape detection
 - RRT algorithm returning path
 - Simulation and FK/IK
 - Link Collision checks (RRT accounts for EE collision)
