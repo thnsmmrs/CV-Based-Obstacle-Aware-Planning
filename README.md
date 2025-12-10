@@ -45,7 +45,7 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 - Krish worked on the robot_kinematics.py file, implementing FK and IK equations and working on the .pdf file with all of the equations and overall solving process
 
 *12/9* Meeting 2 (3 hours 30 minutes)
-- Ethan wrote RRT algorithm and fixed camera output to work correctly with krish's morphology function.
+- Ethan wrote RRT algorithm and fixed camera output to work correctly with krish's morphology function. Changed the cv program to handle obstacles as pixels that aren't white and use a white background as the background subtraction method often led to missed object boundaries due to lighting 
 - Krish did ___
 - Ayush did ___
 
