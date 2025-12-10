@@ -1,10 +1,20 @@
 import cv2
 import numpy as np
 from RRT import rrt
+from robot_kinematics import Robot3R
 from robot_kinematics import improve_obstacle_mask
+import time
 
+dispFPS = False #display FPS debug option for tuning sampling frequency using fps
+#to compare runtimes
+robot = Robot3R()
+robot.initialize(link_lengths=[200,200,200], base_position=(10,10))
+#initializing robot params *can be changed
 goal = None
 path = None
+step_size = 10 #step size for distance between nodes in RRT
+#tuning notes: FPS average remained same between 25-200 and only saw slight
+#drop off at 10. At sample size 5 avg fps = 13 and 10 fps = 15. 25 fps ~= 16
 #global vars needed for scope
 
 def mouse_callback(event, x, y, flags, param): 
@@ -25,6 +35,10 @@ start = (50,50)
 Threshold = 30  #Threshold identifies what is an object and what is not, 20-30 suggested range from doc but will be testable
 overlayStrength = 0.3 #Strength of overlay color on detected obstacles, 0-1 range
 
+if dispFPS:
+    prev_time = time.time()
+    fps = 0.0
+    fpsarr = []
 while True:
     ret, frame = cap.read()
     
@@ -48,14 +62,30 @@ while True:
         cv2.circle(vis, goal, 3, (0,0,255), -1)
     #drawing start point and goal point
     #Overlay outputs the detected obstacles on the original input frame
-        path = rrt(obstacle_mask, start, goal, 20)
-        for (x, y) in path:
-            cv2.circle(vis, (x, y), 5, (255, 0, 0), -1)
+        path = rrt(obstacle_mask, start, goal, step_size, robot)
+        if path is not None:
+            for (x, y) in path:
+                cv2.circle(vis, (x, y), 2, (255, 0, 0), -1)
+    if dispFPS:
+        curr_time = time.time()
+        diff = curr_time - prev_time
+        prev_time = curr_time
+
+        if diff > 0:
+            fps = 1.0/diff
+        cv2.putText(vis,f"FPS: {fps:.1f}",(10, 30),cv2.FONT_HERSHEY_SIMPLEX,1.0,(0, 255, 0),2,cv2.LINE_AA)
+        fpsarr.append(fps)
+        if len(fpsarr) > 1000:
+            fpsarr.pop(0) #pops first fps value if array gets too big (long runtime)
+
     cv2.imshow("Overlay", vis)
-    #cv2.imshow("Obstacle Mask", obstacle_mask) #improved qual
+    #cv2.imshow("Obstacle Mask", obstacle_mask)
 
     
     if cv2.waitKey(1) & 0xFF == 27: #ESC to end program
+        if dispFPS:
+            avgfps = sum(fpsarr) / len(fpsarr)
+            print(f"Average FPS: ", avgfps)
         break
 
 cap.release()
