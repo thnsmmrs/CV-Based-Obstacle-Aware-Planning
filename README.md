@@ -48,12 +48,12 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 - Ethan wrote RRT algorithm and fixed camera output to work correctly with krish's morphology function. Changed the cv program to handle obstacles as pixels that aren't white and use a white background as the background subtraction method often led to missed object boundaries due to lighting 
 - Krish did ___
 - Ayush did ___
+*12/9* (1 hour)
+- Ethan implemented link collision checking inside RRT function but did not result in many valid paths due to link size and small work space. Can be tested further in proper work area on thursday 12/11. If this does not work we can change RRT to generate path in joint space (theta1, theta2, theta3) rather than work space (x,y). Also added an FPS debugging capability to cv program to allow for step size (distance between RRT nodes) testing. Tuning results showed optimal step size to be 8-15 with an average FPS (new paths generated per second) of 14. For smoothest path if snapshot method is used instead rather than constantly recalculating, we can use step size of 5.
 
+  
 Left todo:
-- Morphology on obstacle mask
-- Contour shape detection
-- RRT algorithm returning path
-- Simulation and FK/IK
+- Simulation
 - Link Collision checks (RRT accounts for EE collision)
 
 **TODO:**
