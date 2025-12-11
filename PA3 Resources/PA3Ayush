@@ -1,0 +1,150 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# Parameters
+L1 = 0.5
+L2 = 0.3
+
+# Joint angles in radians
+home = np.radians([0, 0])
+pick = np.radians([30, -20])
+place = np.radians([45, -30])
+
+# PD controller gains
+# Decided to use PD Controller due to its simplicity
+# Kp gives a faster convergence due to stiffness while kd damps it
+# This allows for an error that is less than the desired amount
+Kp = np.diag([40, 40])
+Kd = np.diag([8,  8])
+
+# Specifying time values
+dt = 0.01
+move_time = 2.0
+pause_time = 1.0
+
+# For Animation
+N_move = int(move_time / dt)
+N_pause = int(pause_time / dt)
+
+# Creating pause
+def hold(q, duration, dt):
+    N = int(duration / dt)
+    return np.repeat(q.reshape(1, -1), N, axis=0)
+
+# Creating trajectory
+traj = []
+
+# Moves from initial to pick up place, then pauses for a second
+traj.append(np.linspace(home, pick, N_move))
+traj.append(hold(pick, pause_time, dt))
+
+# Moves from pick to place, and pauses for a second
+traj.append(np.linspace(pick, place, N_move))
+traj.append(hold(place, pause_time, dt))
+
+# Stack arrays found and get the amount of frames in animation
+q_des_traj = np.vstack(traj)
+N = len(q_des_traj)
+
+# Stores simulation
+q  = home.copy()
+dq = np.zeros(2)
+q_log = []
+ee_log = []
+ee_des_log = []
+error_log = []
+
+def fk(q):
+    q1, q2 = q
+    x1 = L1*np.cos(q1)
+    y1 = L1*np.sin(q1)
+    x2 = x1 + L2*np.cos(q1 + q2)
+    y2 = y1 + L2*np.sin(q1 + q2)
+    return (0,x1,x2), (0,y1,y2)
+
+# Simulation run through
+for i in range(N):
+    q_des = q_des_traj[i]
+    dq_des = np.zeros(2)
+
+    # PD control
+    tau = Kp @(q_des - q) + Kd @(dq_des - dq)
+
+    # dynamic expression
+    ddq = tau
+
+    dq = dq + ddq*dt
+    q  = q + dq*dt
+
+    # Moves object to end of a list
+    q_log.append(q.copy())
+
+    # Record end-effector actual position
+    X, Y = fk(q)
+    ee_log.append([X[-1], Y[-1]])
+
+    # Record end-effector desired position
+    Xd, Yd = fk(q_des)
+    ee_des_log.append([Xd[-1], Yd[-1]])
+
+    # Tracking error
+    error_log.append([X[-1] - Xd[-1],Y[-1] - Yd[-1]])
+
+    pick_xy = (L1*np.cos(pick[0]) + L2*np.cos(pick[0] + pick[1]),
+               L1*np.sin(pick[0]) + L2*np.sin(pick[0] + pick[1]))
+    place_xy = (L1*np.cos(place[0]) + L2*np.cos(place[0] + place[1]),
+                L1*np.sin(place[0]) + L2*np.sin(place[0] + place[1]))
+# Creates array of results
+q_log = np.array(q_log)
+ee_log = np.array(ee_log)
+ee_des_log = np.array(ee_des_log)
+error_log = np.array(error_log)
+
+# Creating animation, sets limits of the graph from -1 to 1 in x and y direction
+# Also turns the grid on
+fig, ax = plt.subplots()
+ax.set_aspect("equal")
+ax.set_xlim(-1, 1)
+ax.set_ylim(-1, 1)
+ax.grid(True)
+
+line, = ax.plot([], [], 'o-')
+
+def animate(i):
+    X, Y = fk(q_log[i])
+    line.set_data(X, Y)
+    return line,
+pick_marker = ax.scatter(pick_xy[0],pick_xy[1],c='red',s = 60,zorder = 5,label='Pick')
+place_marker = ax.scatter(place_xy[0],place_xy[1],c = 'green',s = 60,zorder = 5,label='Place')
+ax.legend()
+
+ani = FuncAnimation(fig,animate,frames = N,interval = dt*1000)
+plt.show()
+
+t = np.arange(N)*dt
+
+# Tracking paths
+plt.figure()
+plt.plot(ee_log[:,0], ee_log[:,1], label="Actual EE Path")
+plt.scatter(pick_xy[0],  pick_xy[1],  c='red', s=80, label="Pick Point")
+plt.scatter(place_xy[0], place_xy[1], c='green', s=80, label="Place Point")
+plt.plot(ee_des_log[:,0], ee_des_log[:,1], '--', label="Desired Path")
+plt.title("End Effector Path")
+plt.xlabel("X (m)")
+plt.ylabel("Y (m)")
+plt.legend()
+plt.grid(True)
+plt.axis("equal")
+plt.show()
+
+# Tracking error over time
+plt.figure()
+plt.plot(t, error_log[:,0], label="X Error")
+plt.plot(t, error_log[:,1], label="Y Error")
+plt.title("End Effector Tracking Error")
+plt.xlabel("Time (s)")
+plt.ylabel("Error (m)")
+plt.grid(True)
+plt.legend()
+plt.show()
