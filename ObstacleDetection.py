@@ -1,10 +1,13 @@
 import cv2
 import numpy as np
+import matplotlib
 from RRT import rrt
 from robot_kinematics import Robot3R
 from robot_kinematics import improve_obstacle_mask
 import time
 
+
+capture = False #creating capture variable to be used for running single frame into RRT
 dispFPS = False #display FPS debug option for tuning sampling frequency using fps
 #to compare runtimes
 robot = Robot3R()
@@ -12,6 +15,7 @@ robot.initialize(link_lengths=[200,200,200], base_position=(10,10))
 #initializing robot params *can be changed
 goal = None
 path = None
+RRT_samples = 10 #initializing num of samples output from RRT used to pick best option
 step_size = 10 #step size for distance between nodes in RRT
 #tuning notes: FPS average remained same between 25-200 and only saw slight
 #drop off at 10. At sample size 5 avg fps = 13 and 10 fps = 15. 25 fps ~= 16
@@ -58,14 +62,27 @@ while True:
     overlay[obstacle_mask == 255] = (255, 255, 255)  # Highlight obstacles in red (can change color)
     vis = cv2.addWeighted(frame, overlayStrength, overlay, 1 - overlayStrength, 0)
     cv2.circle(vis, start, 3, (0,0,255), -1) #params as defined in circle function
+    
+    if cv2.waitKey(1) & 0xFF == 67:
+        capture = True
+    
     if goal != None:
         cv2.circle(vis, goal, 3, (0,0,255), -1)
     #drawing start point and goal point
     #Overlay outputs the detected obstacles on the original input frame
-        path = rrt(obstacle_mask, start, goal, step_size, robot)
-        if path is not None:
-            for (x, y) in path:
-                cv2.circle(vis, (x, y), 2, (255, 0, 0), -1)
+        if capture:
+            capturedFrame = frame.copy()
+            capturedOM = obstacle_mask.copy()
+            for i in range(RRT_samples):
+                compDist = 0
+                path, dist = rrt(capturedOM, start, goal, step_size, robot)
+                if dist > compDist:
+                    compDist = dist
+                    bestPath = path
+            if bestPath is not None:
+                for (x, y) in bestPath:
+                    cv2.circle(vis, (x, y), 2, (255, 0, 0), -1)
+                    break
     if dispFPS:
         curr_time = time.time()
         diff = curr_time - prev_time
