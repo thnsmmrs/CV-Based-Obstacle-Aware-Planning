@@ -100,13 +100,4 @@ def improve_obstacle_mask(fg_mask, min_contour_area = 100):
             cv2.drawContours(mask_clean, [contour], -1, 255, thickness=-1)
     return mask_clean
 
-# Collision detection
-def check_link_collisions(robot, theta1, theta2, theta3, obstacle_mask, samples_per_link=20):
-    """
-    Checking all 3 links, samples_per_link is number of points to check along each link
-    """
-    # joint positions
-    positions = robot.forward_kinematics(theta1,theta2,theta3)
-    # image dimensions
-    image_height,image_width = obstacle_mask.shape
 
