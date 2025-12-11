@@ -1,4 +1,4 @@
-# Morphology for obstacle mask
+# Morphology function for obstacle mask written by Krish
 
 import numpy as np
 import cv2
@@ -32,4 +32,5 @@ def improve_obstacle_mask(fg_mask, min_contour_area = 100):
         contour_area = cv2.contourArea(contour)
         if contour_area > min_contour_area:
             cv2.drawContours(mask_clean, [contour], -1, 255, thickness=-1)
+
     return mask_clean
