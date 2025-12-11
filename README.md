@@ -51,6 +51,9 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 *12/9* (1 hour)
 - Ethan implemented link collision checking inside RRT function but did not result in many valid paths due to link size and small work space. Can be tested further in proper work area on thursday 12/11. If this does not work we can change RRT to generate path in joint space (theta1, theta2, theta3) rather than work space (x,y). Also added an FPS debugging capability to cv program to allow for step size (distance between RRT nodes) testing. Tuning results showed optimal step size to be 8-15 with an average FPS (new paths generated per second) of 14. For smoothest path if snapshot method is used instead rather than constantly recalculating, we can use step size of 5.
 
+*12/10* (2 hours)
+- Krish made the initial PD control file and uploaded it to the repo, and then worked on the first half sections of the report. Also, fixed the IK function as it was slightly incorrect and corrected the equations as well
+
   
 Left todo:
 - Simulation
