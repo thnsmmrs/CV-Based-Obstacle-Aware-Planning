@@ -1,5 +1,5 @@
 """
-PD controller file for 3R robot trajectory tracking
+PD controller file for 3R robot trajectory tracking written by Krish
 """
 
 import numpy as np
@@ -61,6 +61,7 @@ def analyze_results(time, q_initialized, q_des_trajectory):
     error_degrees = np.rad2deg(error)
     print(f"\nFinal steady-state error (deg): joint 1 = {error_degrees[0]:.6f}, joint 2 = {error_degrees[1]:.6f}, joint 3 = {error_degrees[2]:.6f}")
     print(f"Max final error (deg) = {np.max(error_degrees):.6f}")
+
 
 
 
