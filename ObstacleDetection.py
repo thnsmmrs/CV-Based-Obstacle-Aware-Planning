@@ -175,7 +175,7 @@ if sim:
         xw, yw = flipCVCoords(x, y)
         x_spline_flipped.append(xw)
         y_spline_flipped.append(yw)
-
+    ##Logic from PA2: https://github.com/thnsmmrs/PA2/blob/main/PA2.py
     theta1_arr = []
     theta2_arr = []
     theta3_arr = []
@@ -221,4 +221,5 @@ if sim:
         link2.set_data([x1,x2], [y1,y2])
         link3.set_data([x2,x3], [y2,y3])
         plt.pause(0.001)
+
     plt.show()
