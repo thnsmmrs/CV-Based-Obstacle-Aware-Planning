@@ -191,8 +191,22 @@ if sim:
         theta1_arr.append(theta1)
         theta2_arr.append(theta2)
         theta3_arr.append(theta3)
-    
 
+    # Creating trajectory for PD controller
+    trajectory = [(theta1_arr[i], theta2_arr[i], theta3_arr[i])
+                  for i in range(len(theta1_arr))]
+    # PD Trajectory Tracking
+if run_pd:
+        time, q, qd, tau_initialized, q_des_trajectory, qd_des_trajectory = simulate(trajectory, dt=0.02)
+    # Analyze tracking and using tracked trajectory for simulation
+    analyze_results(time, q, q_des_trajectory)
+    theta1_arr = q[:, 0].tolist()
+    theta2_arr = q[:, 1].tolist()
+    theta3_arr = q[:, 2].tolist()
+    print(f" PD tracking complete ({len(q)} points)")
+else:
+    print("\n Skipping PD Control")
+    
     fig,graph = plt.subplots()
     graph.set_xlim(0,800)
     graph.set_ylim(0,600)
