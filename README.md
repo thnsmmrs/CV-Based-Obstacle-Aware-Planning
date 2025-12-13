@@ -179,7 +179,7 @@ Extensions
 [1] Practical-CV, *Simple Object Tracking with OpenCV*.  
 https://github.com/Practical-CV/Simple-object-tracking-with-OpenCV/tree/master
 
-[2] Summers, E., Computer Vision Gesture Mirroring Robotic Hand
+[2] Summers, E., Computer Vision Based Gesture Mirroring Robotic Hand.
 https://www.linkedin.com/feed/update/urn:li:activity:7328949339798548481/
 
 [3] Muye1202, *2D RRT for Path Planning*.  
