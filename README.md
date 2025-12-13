@@ -5,7 +5,7 @@
 ## Setup
 
 ### Requirements
-- macOS/Windows
+- macOS/Windows (VS Code or similar)
 - Python 3.8+
 - Webcam (for obstacle detection)
 
