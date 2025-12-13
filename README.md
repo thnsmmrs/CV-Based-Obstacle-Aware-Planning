@@ -1,5 +1,10 @@
 # Obstacle Aware Motion Planning ECE 5463 Final Project
 
+## Demonstration Video
+https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/Demo%20Video.mp4
+
+
+
 **Project Goal**
 Plan and execute collision free motion for a robot from point A to B in a 2D workspace with circular and rectangular obstacles, using sampling based motion planning (RRT), spline trajectories, and PD control.
 
