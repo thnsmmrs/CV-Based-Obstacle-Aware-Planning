@@ -59,14 +59,17 @@ https://github.com/nimRobotics/RRT/blob/master/rrt.py
 - Krish debugged and fixed PD control file and re-uploaded the updated version to the repo, and then separated the morphology and robot_kinematics files to make total integration into the main file easier for later. Also did the first two sections of the report for the project (description of task and FK/IK method summary)
 - Ethan finished debugging the captured frame code and implemented the spline interpolation function from PA2 to work with the bestPath output. Tuned the sampling number with timer in seconds, results were 20 RRT calculations = 0.8s, 50 RRT calculations = 2s. Currently we are printing the spline path over the created RRT path and also showing the start and end at that one frozen frame. For animation we need to separate these onto a separate plot with the obstacle mask and spline. Still need to worry about obstacle collisions.
 - Ayush worked on implementing link collision avoidance. This was found to be not viable due to the nature of the project, and avoiding all obstacles was not realistic for the project, so the team settled on only implementing the end effector obstacle avoidance. Worked a little bit on animation
+
 *12/11* (2 hours)
 - Ethan wrote code for simulation that works as expected showing the 3R arm tracing a spline just like we saw in PA2. Some parameters like link lengths still need to be tuned. Link collision checks still not successfuly implemented, joint space still the leading solution but yet to be tried.
 
 *12/12* (45 mins)
 - Krish integrated the PD controller file into the main obstacle detection .py file
-  
-Left todo:
-- Link Collision checks (RRT accounts for EE collision)
+
+*12/12* (4 hours 15 mins)
+- Ethan debugged PD controller code (unsuccesful) and created plots for steady state error vs time. Generally PD controller returned 1-2 degrees of error average across theta 1 and theta 2, showing noticeable deviations of the end effector from generated spline, so PD control plots were not used for final demonstration. Link collisions in joint space not attempted, did not know the best approach.
+- Ethan filmed demonstration video, finalized sections of final report, prepped repo and submitted files.
+
 
 **TODO:**
 
