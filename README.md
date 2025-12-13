@@ -1,5 +1,34 @@
 # Obstacle Aware Motion Planning ECE 5463 Final Project
 
+
+
+## Setup
+
+### Requirements
+- **Python 3.8+**
+- Webcam (for obstacle detection)
+
+---
+
+### Dependencies
+Install the required python libraries:
+
+```bash
+pip install numpy matplotlib scipy opencv-python
+
+---
+
+### Running the project
+**1. Clone the repository locally**
+```bash
+git clone https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning.git
+cd CV-Based-Obstacle-Aware-Planning
+
+*2. Run the main script*
+```bash
+python ObstacleDetection.py
+
+
 **Demonstration Video:**
 
 - https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/Demo%20Video.mp4
@@ -10,6 +39,11 @@
 
 ![Workspace Plot and Robot Animation](https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/Plotting%20and%20Animation%20Example.jpeg)
 **Workspace Plot and Robot Animation**  
+
+
+
+
+
 
 ## Goals and Timeline
 
