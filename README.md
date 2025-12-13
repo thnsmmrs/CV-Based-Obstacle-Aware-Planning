@@ -1,6 +1,7 @@
 # Obstacle Aware Motion Planning ECE 5463 Final Project
 
 **Demonstration Video**
+
 https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/Demo%20Video.mp4
 
 ![RRT Path Planning Example](https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/RRT-Examples/RRT-Example4.jpg)
