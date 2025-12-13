@@ -40,7 +40,7 @@ python ObstacleDetection.py
 - The planner enforces end effector collision avoidance in the workspace
 - If no valid path is found the user is prompted for a new goal
 - Camera permissions may need to be granted by the system
-- Examples shown use camera aparatus shown in RRT-Example4, CAD model available
+- Examples shown use camera aparatus shown in RRT-Example4 paired with Logitech C270 webcam, CAD model available
 
 ---
 **Demonstration Video:**
