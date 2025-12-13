@@ -15,20 +15,19 @@ Install the required python libraries:
 
 ```bash
 pip install numpy matplotlib scipy opencv-python
-
+```
 ---
-
 ### Running the project
 **1. Clone the repository locally**
 ```bash
 git clone https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning.git
 cd CV-Based-Obstacle-Aware-Planning
-
-*2. Run the main script*
+```
+**2. Run the main script**
 ```bash
 python ObstacleDetection.py
-
-
+```
+---
 **Demonstration Video:**
 
 - https://github.com/thnsmmrs/CV-Based-Obstacle-Aware-Planning/blob/main/Media/Demo%20Video.mp4
