@@ -171,3 +171,50 @@ Extensions
   - Implement re-planning at fixed frequency based on collision detecting ✔
   - Basic hardware implementation (2 or 3R) or simulated 3D env
   - Extra joint var implementation at 5 or 6R, or adding other joint types
+
+---
+
+## References
+
+[1] Practical-CV, *Simple Object Tracking with OpenCV*.  
+https://github.com/Practical-CV/Simple-object-tracking-with-OpenCV/tree/master
+
+[2] Summers, E., Computer Vision Gesture Mirroring Robotic Hand
+https://www.linkedin.com/feed/update/urn:li:activity:7328949339798548481/
+
+[3] Muye1202, *2D RRT for Path Planning*.  
+https://github.com/muye1202/2D_RRT_for_path_planning
+
+[4] nimRobotics, *RRT Implementation (rrt.py)*.  
+https://github.com/nimRobotics/RRT/blob/master/rrt.py
+
+[5] OpenCV Documentation, *Morphological Transformations*.  
+https://docs.opencv.org/4.x/d9/d61/tutorial_py_morphological_ops.html
+
+[6] Summers, E., *PA2: Spline Interpolation and Trajectory Planning*.  
+https://github.com/thnsmmrs/PA2/blob/main/PA2.py
+
+[7] GeeksforGeeks, *Image Segmentation Using Morphological Operations*.  
+https://www.geeksforgeeks.org/python/image-segmentation-using-morphological-operation/
+
+[8] GeeksforGeeks, *Find and Draw Contours Using OpenCV*.  
+https://www.geeksforgeeks.org/python/find-and-draw-contours-using-opencv-python/
+
+[9] University of Illinois at Urbana-Champaign, *ME446 Lab 2: Control and Simulation*.  
+https://coecsl.ece.illinois.edu/me446/ME446Lab_2.pdf
+
+[10] LaValle, S. M., *Rapidly-Exploring Random Trees: A New Tool for Path Planning*.  
+https://msl.cs.illinois.edu/~lavalle/papers/Lav98c.pdf
+
+[11] nimRobotics, *RRT Repository*.  
+https://github.com/nimRobotics/RRT
+
+[12] Clifford, G., *RRT Algorithm Explanation*.  
+https://graham-clifford.com/rrt-algorithm/
+
+[13] YouTube, *RRT Algorithm Visualization and Explanation*.  
+https://www.youtube.com/watch?v=OXikozpLFGo
+
+[14] Python Software Foundation, *random — Generate Pseudo-Random Numbers*.  
+https://docs.python.org/3/library/random.html
+
